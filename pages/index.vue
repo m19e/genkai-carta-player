@@ -1,7 +1,10 @@
 <template>
   <div class="container">
-      <h1 class="h1">Nuxt Bootstrap</h1>
-      <b-button variant="primary">Primary Button</b-button>
+    <logo />
+    <h1 class="h1 m-3">Nuxt Bootstrap</h1>
+    <b-button variant="primary">Primary Button</b-button>
+  </div>
+  <!-- <div class="container">
     <div>
       <logo />
       <h1 class="title">
@@ -23,7 +26,7 @@
         >GitHub</a>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script>
