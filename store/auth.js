@@ -8,8 +8,8 @@ export const state = () => ({
 })
 
 export const getters = {
-  curretUser: (state) => state.user,
-  isAuthenticated: (state) => !!state.user
+  curretUser: state => state.user,
+  isAuthenticated: state => !!state.user
 }
 
 export const mutations = {
