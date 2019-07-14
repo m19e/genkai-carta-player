@@ -1,58 +1,66 @@
 <template>
   <div>
-    <b-form @submit="signin">
+    <b-form class="m-5" @submit="signin">
       <b-form-group
-        label="Email address:"
-        description="We'll never share your email with anyone else."
+        label="ID:"
       >
-        <b-form-input v-model="email" required placeholder="Enter Email" />
+        <b-form-input v-model="id" required placeholder="Enter Your ID" />
       </b-form-group>
       <b-form-group
         label="Password:"
       >
-        <b-form-input v-model="password" required placeholder="Enter Password" />
+        <b-form-input v-model="password" type="password" required placeholder="Enter Password" />
       </b-form-group>
-      <b-button @click="signin" variant="primary">サインイン</b-button>
+      <b-form-checkbox v-model="newUser">新規登録</b-form-checkbox>
+      <b-button @click="signin" variant="primary">{{ isSignInOrUp }}</b-button>
     </b-form>
     <!-- <b-button @click="gSignin" variant="primary">Googleアカウントでログイン</b-button> -->
   </div>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import firebase from '~/plugins/firebase'
+// import firebase from '~/plugins/firebase'
 
-const auth = firebase.auth()
+// const auth = firebase.auth()
 
 export default {
   layout: 'none',
   data: () => ({
-    email: '',
+    id: '',
     password: '',
+    newUser: true,
   }),
   computed: {
-    ...mapGetters('auth', ['isAuthenticated', 'curretUser'])
+    ...mapGetters('auth', ['isAuthenticated', 'curretUser']),
+    isSignInOrUp: function() {
+      return this.newUser ? 'サインアップ' : 'サインイン'
+    },
   },
   methods: {
-    ...mapActions('auth', { authSignin: 'signIn', authSetUser: 'setUser' }),
+    ...mapActions('auth', { authSignup: 'signUp', authSignin: 'signIn', authSetUser: 'setUser' }),
     // サインイン処理
     signin: async function() {
       let data = {
-        email: this.email,
+        email: this.id + '@genkai.com',
         password: this.password
       }
-      await this.authSignin(data)
-      // await this.gotoMessages()
+      if (this.newUser) {
+        await this.authSignup(data)
+      } else {
+        await this.authSignin(data)
+      }
+      await this.gotoMessages()
     },
     gotoMessages: async function() {
       if (this.isAuthenticated) {
         await this.$router.push({ path: '/messages/' })
       }
     },
-    gSignin: function() {
-      auth.signInWithRedirect(
-        new firebase.auth.GoogleAuthProvider()
-      )
-    }
+    // gSignin: function() {
+    //   auth.signInWithRedirect(
+    //     new firebase.auth.GoogleAuthProvider()
+    //   )
+    // }
   }
 }
 </script>
