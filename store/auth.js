@@ -22,7 +22,8 @@ export const actions = {
   // サインアップ処理
   async signUp({ dispatch, commit }, data) {
     try {
-      await auth.creareUserWithEmailAndPassword(data.email, data.password).then( res => {
+      await auth.createUserWithEmailAndPassword(data.email, data.password).then( res => {
+        console.log(res);
         commit('setUser', res.user)
       }).catch( error => {
         console.error(error);
