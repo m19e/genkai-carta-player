@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <b-form class="m-5" @submit="signin">
       <b-form-group
         label="ID:"
