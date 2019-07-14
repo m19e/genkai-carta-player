@@ -23,10 +23,11 @@ export const actions = {
   async signIn({ dispatch, commit }, data) {
     try {
       await auth.signInWithEmailAndPassword(data.email, data.password).then( res => {
+        console.log(res);
         // ログイン成功
         commit('setUser', res.user)
       }).catch( error => {
-        // エラー処理
+        console.error(error)
       })
     } catch (e) {
       console.log('reject[error]:' + e)
