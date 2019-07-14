@@ -15,13 +15,15 @@ export const getters = {
 
 export const actions = {
   initMessages: firestoreAction(async ({ bindFirestoreRef }) => {
-    await bindFirestoreRef('messages', messagesRef.orderBy('time', 'desc'))
+    await bindFirestoreRef('messages', messagesRef.orderBy('time', 'asc'))
   }),
   addMessageRef: firestoreAction((context, data) => {
+    let date = new Date()
     messagesRef.add({
       uid:  data.uid,
       text: data.text,
-      time: Date.now()
+      time: Date.now(),
+      timestamp: date.toLocaleString(),
     })
   })
 }
