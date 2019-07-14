@@ -1,4 +1,4 @@
-import { firebaseMutations, firebaseAction } from 'vuexfire'
+import { firestoreAction } from 'vuexfire'
 import firebase from '~/plugins/firebase'
 import 'firebase/firestore'
 
@@ -13,15 +13,11 @@ export const getters = {
   messages: (state) => state.messages
 }
 
-export const mutations = {
-  ...firebaseMutations
-}
-
 export const actions = {
-  initMessages: firebaseAction(async ({ bindFirebaseRef }) => {
-    await bindFirebaseRef('messages', messagesRef.orderBy('time', 'desc'))
+  initMessages: firestoreAction(async ({ bindFirestoreRef }) => {
+    await bindFirestoreRef('messages', messagesRef.orderBy('time', 'desc'))
   }),
-  addMessageRef: firebaseAction((context, data) => {
+  addMessageRef: firestoreAction((context, data) => {
     messagesRef.add({
       uid:  data.uid,
       text: data.text,

@@ -31,7 +31,7 @@ export default {
     newUser: true,
   }),
   computed: {
-    ...mapGetters('auth', ['isAuthenticated', 'curretUser']),
+    ...mapGetters('auth', ['isAuthenticated', 'currentUser']),
     isSignInOrUp: function() {
       return this.newUser ? 'サインアップ' : 'サインイン'
     },

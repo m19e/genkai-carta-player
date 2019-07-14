@@ -1,4 +1,4 @@
-import { firebaseMutations, firebaseAction } from 'vuexfire'
+import { vuexfireMutations, firestoreAction } from 'vuexfire'
 import firebase from '~/plugins/firebase'
 import 'firebase/firestore'
 
@@ -7,6 +7,6 @@ export const strict = false
 export const state = () => ({})
 export const getters = {}
 export const mutations = {
-  ...firebaseMutations
+  ...vuexfireMutations
 }
 export const actions = {}
