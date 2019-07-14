@@ -1,7 +1,11 @@
 <template>
-  <div class="container-fluid m-5">
+  <div class="container m-5">
     <ul v-for="(msg, i) in messages" style="list-style:none;" class="m-4" :key="i">
-      <li v-show="msg.timestamp">{{ msg }}</li>
+      <div class="p-2" style="background-color: white;" v-show="msg.timestamp">
+        <li style="text-align:left;">{{ users[`${msg.uid}`] }}</li>
+        <li class="p-1" style="border: solid 1px; border-radius: 1em;">{{ msg.text }}</li>
+        <li style="text-align:right;">{{ msg.timestamp }}</li>
+      </div>
     </ul>
 
     <b-form class="fixed-bottom m-2" inline>
@@ -16,15 +20,26 @@ import firebase from '~/plugins/firebase'
 
 export default {
   data: () => ({
-    message: ''
+    message: '',
+    users: {}
   }),
   computed: {
     ...mapGetters('messages', ['messages']),
-    ...mapGetters('auth', ['currentUser'])
+    ...mapGetters('auth', ['currentUser']),
+    setUsernames() {
+      firebase.firestore().collection('users').doc('names').get().then( doc => {
+        console.log(doc.data())
+        this.users = doc.data()
+      })
+    },
   },
   created() {
     //do something after creating vue instance
-    this.initMessages()
+    this.initMessages(),
+    firebase.firestore().collection('users').doc('names').get().then( doc => {
+      console.log(doc.data())
+      this.users = doc.data()
+    })
   },
   methods: {
     ...mapActions('messages', {

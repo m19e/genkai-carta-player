@@ -4,18 +4,22 @@ import 'firebase/firestore'
 
 const db = firebase.firestore()
 const messagesRef = db.collection('messages')
+const usersRef = db.collection('users')
 
 export const state = () => ({
-  messages: []
+  messages: [],
+  users: []
 })
 
 export const getters = {
-  messages: (state) => state.messages
+  messages: (state) => state.messages,
+  users: (state) => state.users
 }
 
 export const actions = {
   initMessages: firestoreAction(async ({ bindFirestoreRef }) => {
     await bindFirestoreRef('messages', messagesRef.orderBy('time', 'asc'))
+    await bindFirestoreRef('users', usersRef.doc('names'))
   }),
   addMessageRef: firestoreAction((context, data) => {
     let date = new Date()
