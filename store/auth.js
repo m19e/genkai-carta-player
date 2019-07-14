@@ -19,6 +19,18 @@ export const mutations = {
 }
 
 export const actions = {
+  // サインアップ処理
+  async signUp({ dispatch, commit }, data) {
+    try {
+      await auth.creareUserWithEmailAndPassword(data.email, data.password).then( res => {
+        commit('setUser', res.user)
+      }).catch( error => {
+        console.error(error);
+      })
+    } catch (e) {
+      console.error('reject[error]:' + e);
+    }
+  },
   // サインイン処理
   async signIn({ dispatch, commit }, data) {
     try {
