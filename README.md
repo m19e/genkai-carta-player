@@ -1,6 +1,6 @@
 # genkai-carta-player
 
-> Genkai-Carta with Nuxt.js
+> [Genkai-Carta](https://zanshinm9.hatenablog.com/entry/2019/07/04/211019) with Nuxt.js
 
 ## Build Setup
 
