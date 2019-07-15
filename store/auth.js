@@ -2,6 +2,7 @@ import { firebaseMutations, firebaseAction } from 'vuexfire'
 import firebase from '~/plugins/firebase'
 
 const auth = firebase.auth()
+const db = firebase.firestore()
 
 export const state = () => ({
   user: null
@@ -36,7 +37,11 @@ export const actions = {
   async signIn({ dispatch, commit }, data) {
     try {
       await auth.signInWithEmailAndPassword(data.email, data.password).then( res => {
-        console.log(res);
+        console.log(res.user.uid);
+        let postdata = {
+          [res.user.uid] : data.username
+        }
+        db.collection('users').doc('names').set(postdata,{ merge: true })
         // ログイン成功
         commit('setUser', res.user)
       }).catch( error => {

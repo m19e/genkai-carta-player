@@ -26,20 +26,11 @@ export default {
   computed: {
     ...mapGetters('messages', ['messages']),
     ...mapGetters('auth', ['currentUser']),
-    setUsernames() {
-      firebase.firestore().collection('users').doc('names').get().then( doc => {
-        console.log(doc.data())
-        this.users = doc.data()
-      })
-    },
   },
   created() {
     //do something after creating vue instance
     this.initMessages(),
-    firebase.firestore().collection('users').doc('names').get().then( doc => {
-      console.log(doc.data())
-      this.users = doc.data()
-    })
+    this.getUsernames()
   },
   methods: {
     ...mapActions('messages', {
@@ -50,7 +41,19 @@ export default {
     addMessage() {
       this.addMessageRef({ text: this.message, uid: this.currentUser.uid })
       this.message = ''
-    }
+    },
+    // setUsernames() {
+    //   firebase.firestore().collection('users').doc('names').get().then( doc => {
+    //     console.log(doc.data())
+    //     this.users = doc.data()
+    //   })
+    // },
+    getUsernames() {
+      firebase.firestore().collection('users').doc('names').onSnapshot(querySnapshot => {
+        console.log(querySnapshot.data())
+        this.users = querySnapshot.data()
+      })
+    },
   },
 }
 </script>
