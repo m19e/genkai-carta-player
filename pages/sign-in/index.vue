@@ -2,7 +2,7 @@
   <div class="container">
     <b-form class="p-5" @submit="signin">
       <b-form-group>
-        <b-form-input v-model="username" placeholder="Enter Username" />
+        <b-form-input v-model="username" required placeholder="Enter Username" />
       </b-form-group>
       <b-input-group class="pb-3" prepend="@">
         <b-input v-model="id" required placeholder="Enter TwitterID" />

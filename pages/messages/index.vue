@@ -8,9 +8,10 @@
       </div>
     </ul>
 
-    <b-form class="fixed-bottom m-2" inline>
-      <b-input v-model="message" class="mb-2 mr-sm-2 mb-sm-0 col-10" placeholder="メッセージを入力" />
-      <b-button @click="addMessage" variant="primary">送信</b-button>
+    <b-form inline class="fixed-bottom m-2 pl-2">
+      <b-input v-model="username" class="mb-2 mr-sm-2 mb-sm-0 col-2" placeholder="username" />
+      <b-input v-model="message" class="mb-2 mr-sm-2 mb-sm-0 col-8" placeholder="メッセージを入力" />
+      <b-button @click="addMessage" class="col-1" variant="primary">送信</b-button>
     </b-form>
   </div>
 </template>
@@ -18,9 +19,12 @@
 import { mapGetters, mapActions } from 'vuex'
 import firebase from '~/plugins/firebase'
 
+const db = firebase.firestore()
+
 export default {
   data: () => ({
     message: '',
+    username: '',
     users: {}
   }),
   computed: {
@@ -41,18 +45,17 @@ export default {
     addMessage() {
       this.addMessageRef({ text: this.message, uid: this.currentUser.uid })
       this.message = ''
+      db.collection('users').doc('names').set({ [this.currentUser.uid] : this.username },{ merge: true })
     },
-    // setUsernames() {
-    //   firebase.firestore().collection('users').doc('names').get().then( doc => {
-    //     console.log(doc.data())
-    //     this.users = doc.data()
-    //   })
-    // },
-    getUsernames() {
-      firebase.firestore().collection('users').doc('names').onSnapshot(querySnapshot => {
+    getUsernames: async function() {
+      await firebase.firestore().collection('users').doc('names').onSnapshot(querySnapshot => {
         console.log(querySnapshot.data())
         this.users = querySnapshot.data()
       })
+      this.setPostUsername()
+    },
+    setPostUsername() {
+      this.username = this.users[`${this.currenUser.uid}`]
     },
   },
 }

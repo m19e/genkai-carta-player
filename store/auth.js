@@ -27,21 +27,17 @@ export const actions = {
         console.log(res);
         commit('setUser', res.user)
       }).catch( error => {
-        console.error(error);
+        console.error(error)
       })
     } catch (e) {
-      console.error('reject[error]:' + e);
+      console.error('reject[error]:' + e)
     }
   },
   // サインイン処理
   async signIn({ dispatch, commit }, data) {
     try {
       await auth.signInWithEmailAndPassword(data.email, data.password).then( res => {
-        console.log(res.user.uid);
-        let postdata = {
-          [res.user.uid] : data.username
-        }
-        db.collection('users').doc('names').set(postdata,{ merge: true })
+        db.collection('users').doc('names').set({ [res.user.uid] : data.username },{ merge: true })
         // ログイン成功
         commit('setUser', res.user)
       }).catch( error => {
