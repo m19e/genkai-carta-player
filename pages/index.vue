@@ -1,32 +1,28 @@
 <template>
   <div class="container">
-    <logo />
-    <h1 class="h1 m-3">Nuxt Bootstrap</h1>
-    <b-button variant="primary">Primary Button</b-button>
-  </div>
-  <!-- <div class="container">
     <div>
+      <!-- <h1 class="title">
+        Genkai-Carta-Player
+      </h1> -->
       <logo />
-      <h1 class="title">
-        genkai-carta-player
-      </h1>
       <h2 class="subtitle">
         Genkai-Carta with Nuxt.js
       </h2>
       <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
+        <a @click="gotoSignin" class="button--green">Start</a>
+        <!-- <a
+        href="https://nuxtjs.org/"
+        target="_blank"
+        class="button--green"
         >Documentation</a>
         <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >GitHub</a>
+        href="https://github.com/nuxt/nuxt.js"
+        target="_blank"
+        class="button--grey"
+        >GitHub</a> -->
       </div>
     </div>
-  </div> -->
+  </div>
 </template>
 
 <script>
@@ -35,6 +31,11 @@ import Logo from '~/components/Logo.vue'
 export default {
   components: {
     Logo
+  },
+  methods: {
+    gotoSignin: async function() {
+      await this.$router.push({ path: '/sign-in/' })
+    },
   }
 }
 </script>
