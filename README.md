@@ -19,4 +19,20 @@ $ npm start
 $ npm run generate
 ```
 
+## .env
+``` bash
+$ cp sample.env .env
+```
+
+``` .env
+API_KEY=
+AUTH_DOMAIN=
+DATABASE_URL=
+PROJECTID=
+STORAGE_BUCKET=
+MESSAGING_SENDER_ID=
+APPID=
+```
+
+About [限界カルタ](https://zanshinm9.hatenablog.com/entry/2019/07/04/211019).
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
