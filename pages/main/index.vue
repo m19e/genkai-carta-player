@@ -1,32 +1,38 @@
 <template>
   <div class="container">
-    <div class="pt-5">
+    <div class="pt-5 pb-5">
+      <b-button v-b-modal.modal-0>上の句入力Modal</b-button>
       <b-button v-b-modal.modal-1>下の句入力Modal</b-button>
-      <b-button v-b-modal.modal-2 variant="danger">お話Modal</b-button>
+      <b-button v-b-modal.modal-2 variant="danger">お話催促Modal</b-button>
       <b-button v-b-modal.modal-3 variant="success">経過時間Modal</b-button>
-      <b-button v-b-modal.modal-4 variant="outline-primary">優勝者決め</b-button>
+      <b-button v-b-modal.modal-4 variant="outline-primary">優勝者決めModal</b-button>
     </div>
-
-    <div v-for="( cp, i ) in cps" :key="i">
-      {{ cp }}
+    <div class="h3">
+      下の句
     </div>
-    <b-modal id="modal-1" centered="true" v-model="show">
+    <div v-for="( prg, i ) in programs" :key="i">
+      <div class="h2">
+        {{ prg.speaker }}:{{ prg.couple }}
+      </div>
+    </div>
+    <b-modal id="modal-1" centered v-model="show">
       <b-form inline>
         <b-form-input v-model="speaker" placeholder="取り手" />
         <b-form-input v-model="couple" placeholder="CP名" />
       </b-form>
 
       <div slot="modal-footer">
-        <b-button variant="primary" size="sm" class="float-right" @click="show=false">
+        <b-button variant="primary" size="sm" class="float-right" @click="addCoupling">
           OK
         </b-button>
       </div>
     </b-modal>
     <b-modal id="modal-2">
       <p>取り手に推しCPの話を促すmodal</p>
+
     </b-modal>
     <b-modal id="modal-3">
-      <div class="time">{{ formatTime }}</div>
+      <!-- <div class="time">{{ formatTime }}</div> -->
       <p>お話の経過時間を表示するmodal</p>
     </b-modal>
     <b-modal id="modal-4">
@@ -41,7 +47,23 @@ import firebase from '~/plugins/firebase'
 
 export default {
   data: () => ({
+    programs: [
+      { speaker: "hiddenNo", couple: "しきあす" },
+      { speaker: "m19e", couple: "りょううめ" },
+      { speaker: "meme", couple: "かほなつ" },
+    ],
+    speaker: '',
+    couple: '',
     show: false,
+    count: 0
   }),
+  methods: {
+    addCoupling() {
+      this.programs.push({ speaker: this.speaker, couple: this.couple })
+      this.show = false
+      this.speaker = ''
+      this.couple = ''
+    }
+  }
 }
 </script>
