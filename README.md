@@ -35,4 +35,5 @@ APPID=
 ```
 
 About 限界カルタ=>[このブログのどこからでも切れます](https://zanshinm9.hatenablog.com/entry/2019/07/04/211019).
+<br>
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
