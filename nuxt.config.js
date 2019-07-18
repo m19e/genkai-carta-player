@@ -1,6 +1,11 @@
 
 export default {
   mode: 'spa',
+  router: {
+    middleware: [
+      'authenticated'
+    ]
+  },
   /*
   ** Headers of the page
   */
