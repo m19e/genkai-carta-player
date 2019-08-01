@@ -6,6 +6,8 @@
       <b-button v-b-modal.modal-2 variant="danger">お話催促Modal</b-button>
       <b-button v-b-modal.modal-3 variant="success">経過時間Modal</b-button>
       <b-button v-b-modal.modal-4 variant="outline-primary">優勝者決めModal</b-button>
+
+      <b-button @click="makeToast(append)">Show Toast</b-button>
     </div>
     <div class="h3">
       下の句
@@ -55,7 +57,8 @@ export default {
     speaker: '',
     couple: '',
     show: false,
-    count: 0
+    count: 0,
+    toastCount: 0,
   }),
   methods: {
     addCoupling() {
@@ -63,7 +66,15 @@ export default {
       this.show = false
       this.speaker = ''
       this.couple = ''
-    }
+    },
+    makeToast(append = false) {
+      this.toastCount++
+      this.$bvToast.toast(`${this.toastCount}枚目 \n [誰か]が[CP名]を取りました`, {
+        title: '[TEST] BootstrapVue Toast',
+        autoHideDelay: 5000,
+        appendToast: append
+      })
+    },
   }
 }
 </script>
