@@ -7,14 +7,14 @@
       <b-button v-b-modal.modal-3 variant="success">経過時間Modal</b-button>
       <b-button v-b-modal.modal-4 variant="outline-primary">優勝者決めModal</b-button>
 
-      <b-button @click="makeToast(append)">Show Toast</b-button>
+      <!-- <b-button @click="makeToast">Show Toast</b-button> -->
     </div>
     <div class="h3">
       下の句
     </div>
     <div v-for="( prg, i ) in programs" :key="i">
       <div class="h2">
-        {{ prg.speaker }}:{{ prg.couple }}
+        {{ i+1 }}枚目 {{ prg.couple }} / {{ prg.speaker }}
       </div>
     </div>
     <b-modal id="modal-1" centered v-model="show">
@@ -50,9 +50,9 @@ import firebase from '~/plugins/firebase'
 export default {
   data: () => ({
     programs: [
-      { speaker: "hiddenNo", couple: "しきあす" },
-      { speaker: "m19e", couple: "りょううめ" },
-      { speaker: "meme", couple: "かほなつ" },
+      // { speaker: "hiddenNo", couple: "しきあす" },
+      // { speaker: "m19e", couple: "りょううめ" },
+      // { speaker: "meme", couple: "かほなつ" },
     ],
     speaker: '',
     couple: '',
@@ -60,6 +60,17 @@ export default {
     count: 0,
     toastCount: 0,
   }),
+  watch: {
+    programs: {
+      handler(val, oldVal) {
+        let add = this.programs.slice(-1)[0]
+        // console.log(oldVal)
+        // console.log(val)
+        this.makeToast(add.speaker, add.couple)
+      },
+      deep: true
+    },
+  },
   methods: {
     addCoupling() {
       this.programs.push({ speaker: this.speaker, couple: this.couple })
@@ -67,12 +78,11 @@ export default {
       this.speaker = ''
       this.couple = ''
     },
-    makeToast(append = false) {
-      this.toastCount++
-      this.$bvToast.toast(`${this.toastCount}枚目 \n [誰か]が[CP名]を取りました`, {
-        title: '[TEST] BootstrapVue Toast',
-        autoHideDelay: 5000,
-        appendToast: append
+    makeToast(who, cp) {
+      // this.toastCount++
+      this.$bvToast.toast(`[${who}]が[${cp}]を取りました`, {
+        title: '下の句',
+        autoHideDelay: 20000
       })
     },
   }
